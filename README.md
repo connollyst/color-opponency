@@ -1,4 +1,12 @@
 color-opponency
 ===============
 
-Simple exploration of biological color opponency pathways.
+MATLAB functions exploring color opponency concepts inspired by visual
+neural pathways.
+
+```
+>> pLGN(img, 'display');
+>> pLGN(img, 'display');
+>> V1SingleOpponent(img);
+>> V1SingleOpponent(img, 'display');
+```
