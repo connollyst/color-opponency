@@ -1,4 +1,4 @@
-color-opponency
+Color Opponency
 ===============
 
 MATLAB functions exploring color opponency concepts inspired by visual
