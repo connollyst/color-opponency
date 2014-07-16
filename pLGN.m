@@ -15,6 +15,11 @@ function [pLo, mLo, pMo, mMo, pSo, mSo] = pLGN( I, varargin )
     Ms = surround(M);
     Ss = surround(S);   % TODO any reference to short surround in lit?
     
+    %% Residuals account for information not in centers & surrounds
+    Lr = L - Lc - Ls;
+    Mr = M - Mc - Ms;
+    Sr = S - Sc - Ss;
+    
     %% Plus (p**) and minus (m**) opponency channels (p1009)
     pLo =  Lc - Ms;
     mLo = -Lc + Ms;
