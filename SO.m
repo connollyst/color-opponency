@@ -1,4 +1,4 @@
-function [pLo, mLo, pMo, mMo, pSo, mSo] = pLGN( I, varargin )
+function [pLo, mLo, pMo, mMo, pSo, mSo] = SO( I, varargin )
 %pLGN Parvocellular Lateral Geniculate Nucleus (pLGN) simulation
 %   Simulate the parvocellular lateral geniculate nucleus (pLGN) processing
 %   of the input color image.

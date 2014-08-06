@@ -2,7 +2,7 @@ function [light, dark, red, yellow, green, blue] = V1SingleOpponent( I, varargin
 %V1SINGLEOPPONENT Simulate
 %   Higher level integration of color channels by V1 (p1011)
 
-    [pLo, mLo, pMo, mMo, pSo, mSo] = pLGN( I, varargin{:} );
+    [pLo, mLo, pMo, mMo, pSo, mSo] = SO( I, varargin{:} );
     
     light  = pLo + pMo + pSo;
     dark   = mMo + mLo + mSo;
