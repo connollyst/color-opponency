@@ -1,57 +1,83 @@
-function [L_left, L_right, M_left, M_right] = DOVertical( I, varargin )
-
-    L = I(:,:,1); % Long wavelength:   red
-    M = I(:,:,2); % Middle wavelength: green
-    L_left_center    = apply_left_center_filter(L);
-    M_left_center    = apply_left_center_filter(M);
-    L_right_center   = apply_right_center_filter(L);
-    M_right_center   = apply_right_center_filter(M);
-    L_left_surround  = apply_left_surround_filter(L);
-    M_left_surround  = apply_left_surround_filter(M);
-    L_right_surround = apply_right_surround_filter(L);
-    M_right_surround = apply_right_surround_filter(M);
+function [L_top, L_bottom, M_top, M_bottom] = DOVertical( I, config )
+    % Long (red) wavelength orientation opponancy..
+    L = I(:,:,1);
+    L_top_center      = apply_top_center_filter     ( L, config );
+    L_top_surround    = apply_top_surround_filter   ( L, config );
+    L_bottom_center   = apply_bottom_center_filter  ( L, config );
+    L_bottom_surround = apply_bottom_surround_filter( L, config );
     
-    %% Plus (p**) and minus (m**) opponency channels (p1009)
-    L_left  = L_left_center  + M_right_surround;
-    L_right = L_right_center + M_left_surround;
-    M_left  = M_left_center  + L_right_surround;
-    M_right = M_right_center + L_left_surround;
+    % Middle (green) wavelength orientation opponancy..
+    M = I(:,:,2);
+    M_top_center      = apply_top_center_filter     ( M, config );
+    M_top_surround    = apply_top_surround_filter   ( M, config );
+    M_bottom_center   = apply_bottom_center_filter  ( M, config );
+    M_bottom_surround = apply_bottom_surround_filter( M, config );
+    
+    % Wavelength opponancy..
+    L_top    = on(L_top_center    + M_bottom_surround);
+    M_top    = on(M_top_center    + L_bottom_surround);
+    L_bottom = on(L_bottom_center + M_top_surround);
+    M_bottom = on(M_bottom_center + L_top_surround);
 end
 
-function I_out = apply_left_center_filter(I_in)
-    filter = left_center() - right_center();
+function I_out = apply_top_center_filter(I_in, config)
+    filter = top_center(config) - bottom_center(config);
     I_out = on(gaussian(I_in, filter()));
 end
 
-function I_out = apply_right_center_filter(I_in)
-    filter = right_center() - left_center();
+function I_out = apply_bottom_center_filter(I_in, config)
+    filter = bottom_center(config) - top_center(config);
     I_out = on(gaussian(I_in, filter()));
 end
 
-function I_out = apply_left_surround_filter(I_in)
-    filter = left_surround() - right_surround();
+function I_out = apply_top_surround_filter(I_in, config)
+    filter = top_surround(config) - bottom_surround(config);
     I_out = on(gaussian(I_in, filter()));
 end
 
-function I_out = apply_right_surround_filter(I_in)
-    filter = right_surround() - left_surround();
+function I_out = apply_bottom_surround_filter(I_in, config)
+    filter = bottom_surround(config) - top_surround(config);
     I_out = on(gaussian(I_in, filter()));
 end
 
-function l = left_center()
-    l = customgauss([50 50], 10, 2.5, 0, 0, 10, [0 -10]);
+function l = top_center(config)
+    l = customgauss( ...
+        [config.size config.size], ...
+        config.excitation.width, ...
+        config.excitation.length, ...
+        0, 0, ...
+        config.excitation.weight, ...
+        [-config.excitation.offset 0]);
 end
 
-function l = right_center()
-    l = customgauss([50 50], 10, 2.5, 0, 0, 10, [0  10]);
+function l = bottom_center(config)
+    l = customgauss( ...
+        [config.size config.size], ...
+        config.excitation.width, ...
+        config.excitation.length, ...
+        0, 0, ...
+        config.excitation.weight, ...
+        [config.excitation.offset 0]);
 end
 
-function l = left_surround()
-    l = customgauss([50 50], 10, 5, 0, 0, 3,    [0 -10]);
+function l = top_surround(config)
+    l = customgauss( ...
+        [config.size config.size], ...
+        config.inhibition.width, ...
+        config.inhibition.length, ...
+        0, 0, ...
+        config.inhibition.weight, ...
+        [-config.inhibition.offset 0]);
 end
 
-function l = right_surround()
-    l = customgauss([50 50], 10, 5, 0, 0, 3,    [0  10]);
+function l = bottom_surround(config)
+    l = customgauss( ...
+        [config.size config.size], ...
+        config.inhibition.width, ...
+        config.inhibition.length, ...
+        0, 0, ...
+        config.inhibition.weight, ...
+        [config.inhibition.offset 0]);
 end
 
 function filtered = gaussian(img, filter)
