@@ -39,15 +39,15 @@ function [pLo, mLo, pMo, mMo, pSo, mSo] = SO( I, varargin )
     end
 end
 
-function Ic = center( I )
+function Ic = center(I)
     Ic = gaussian(I, 5, 2);
 end
 
-function Is = surround( I )
+function Is = surround(I)
     Is = gaussian(I, 20, 5);
 end
 
-function filtered = gaussian( img, hsize, sigma)
+function filtered = gaussian(img, hsize, sigma)
     filter   = fspecial('gaussian', [hsize hsize], sigma);
     filtered = imfilter(img, filter, 'same');
 end
