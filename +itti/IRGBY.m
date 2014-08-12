@@ -21,12 +21,13 @@ function [I, R, G, B, Y] = IRGBY(img)
     B = utils.on(b - (r + g)/2);
     Y = utils.on((r + g)/2 - abs(r - g)/2 - b);
     
-    figure(1), imshow(img)
-    figure(2), imagesc(I)
-    figure(3), imagesc(R)
-    figure(4), imagesc(G)
-    figure(5), imagesc(B)
-    figure(6), imagesc(Y)
+    figure()
+    subplot(3, 2, 1), imshow(img);
+    subplot(3, 2, 2), imagesc(I), colormap('gray'), title('intensity');
+    subplot(3, 2, 3), imagesc(R), colormap('gray'), title('red');
+    subplot(3, 2, 4), imagesc(G), colormap('gray'), title('green');
+    subplot(3, 2, 5), imagesc(B), colormap('gray'), title('blue');
+    subplot(3, 2, 6), imagesc(Y), colormap('gray'), title('yellow');
 end
 
 function n = normalize(channel, I)
@@ -39,4 +40,3 @@ function n = normalize(channel, I)
     I(I < m) = 1;
     n = channel./I;
 end
-
