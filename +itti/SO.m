@@ -11,17 +11,17 @@ function [R, G, B, Y] = SO(rgb, config)
     g_c = center(g, config);
     b_c = center(b, config);
     i_c = center(i, config);
-    r_c = normalize(r_c, i_c);
-    g_c = normalize(g_c, i_c);
-    b_c = normalize(b_c, i_c);
+    %r_c = normalize(r_c, i_c);
+    %g_c = normalize(g_c, i_c);
+    %b_c = normalize(b_c, i_c);
     
     r_s = surround(r, config);
     g_s = surround(g, config);
     b_s = surround(b, config);
     i_s = surround(i, config);
-    r_s = normalize(r_s, i_s);
-    g_s = normalize(g_s, i_s);
-    b_s = normalize(b_s, i_s);
+    %r_s = normalize(r_s, i_s);
+    %g_s = normalize(g_s, i_s);
+    %b_s = normalize(b_s, i_s);
     
     % Combine center surround signals to obtain color opponency..
     L = utils.on(i_c - i_s);
