@@ -40,11 +40,24 @@ function [R, G, B, Y] = SO(rgb, config)
 end
 
 function Ic = center(I, config)
-    Ic = imfilter(I, rf.center(config), 'same');
+    Ic = gaussian(I, rf.center(config));
 end
 
 function Is = surround(I, config)
-    Is = imfilter(I, rf.surround(config), 'same');
+    Is = gaussian(I, rf.surround(config));
+end
+
+function filtered = gaussian(img, filter)
+    % Add padding
+    pad_cols = ceil(size(img,1)/2);
+    pad_rows = ceil(size(img,2)/2);
+    padded   = padarray(img, [pad_cols, pad_rows], 'symmetric','both');
+    % Apply filter
+    padded_filtered = imfilter(padded, filter, 'same');
+    % Remove padding
+    cols = pad_cols+1:pad_cols+size(img,1);
+    rows = pad_rows+1:pad_rows+size(img,2);
+    filtered = padded_filtered(cols,rows);
 end
 
 function n = normalize(channel, I)
