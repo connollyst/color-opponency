@@ -41,7 +41,7 @@ function [R_v, G_v, B_v, Y_v] = DOVertical(rgb, config)
     B_b = utils.on(b_b_c - (r_t_s + g_t_s)/2);
     Y_b = utils.on((r_b_c + g_b_c)/2 - abs(r_t_s - g_t_s)/2 - b_t_s);
     
-    % Recover all horizontal color opponency..
+    % Consolidate to get all horizontal color opponency..
     R_v = R_t + R_b;
     G_v = G_t + G_b;
     B_v = B_t + B_b;
