@@ -49,11 +49,11 @@ function [R_h, G_h, B_h, Y_h] = DOHorizontal(rgb, config)
     
     figure()
     subplot(3, 2, 1), imshow(rgb);
-    %subplot(3, 2, 2), imagesc(I), colormap('gray'), title('intensity');
-    subplot(3, 2, 3), imagesc(R_h), colormap('gray'), title('red');
-    subplot(3, 2, 4), imagesc(G_h), colormap('gray'), title('green');
-    subplot(3, 2, 5), imagesc(B_h), colormap('gray'), title('blue');
-    subplot(3, 2, 6), imagesc(Y_h), colormap('gray'), title('yellow');
+    %subplot(3, 2, 2), imagesc(I_h), colormap('gray'), title('intensity');
+    subplot(3, 2, 3), imshow(R_h), colormap('gray'), title('red');
+    subplot(3, 2, 4), imshow(G_h), colormap('gray'), title('green');
+    subplot(3, 2, 5), imshow(B_h), colormap('gray'), title('blue');
+    subplot(3, 2, 6), imshow(Y_h), colormap('gray'), title('yellow');
 end
 
 function [l_center, r_center] = left_right_center(color, config)
