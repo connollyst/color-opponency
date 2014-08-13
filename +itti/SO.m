@@ -1,38 +1,37 @@
-function [R, G, B, Y] = SO(img, config)
+function [R, G, B, Y] = SO(rgb, config)
 
-    img = im2double(img);
+    rgb = im2double(rgb);
     
-    L = img(:,:,1); % Long wavelength:   red
-    M = img(:,:,2); % Middle wavelength: green
-    S = img(:,:,3); % Short wavelength:  blue
-    I = (L + M + S)/3;
+    r = rgb(:,:,1);
+    g = rgb(:,:,2);
+    b = rgb(:,:,3);
+    i = (r + g + b)/3;
     
+    r_c = center(r, config);
+    g_c = center(g, config);
+    b_c = center(b, config);
+    i_c = center(i, config);
+    r_c = normalize(r_c, i_c);
+    g_c = normalize(g_c, i_c);
+    b_c = normalize(b_c, i_c);
     
-    Lc = center(L, config);
-    Mc = center(M, config);
-    Sc = center(S, config);
-    Ic = center(I, config);
-    Lc = normalize(Lc, Ic);
-    Mc = normalize(Mc, Ic);
-    Sc = normalize(Sc, Ic);
-    
-    Ls = surround(L, config);
-    Ms = surround(M, config);
-    Ss = surround(S, config);
-    Is = surround(I, config);
-    Ls = normalize(Ls, Is);
-    Ms = normalize(Ms, Is);
-    Ss = normalize(Ss, Is);
+    r_s = surround(r, config);
+    g_s = surround(g, config);
+    b_s = surround(b, config);
+    i_s = surround(i, config);
+    r_s = normalize(r_s, i_s);
+    g_s = normalize(g_s, i_s);
+    b_s = normalize(b_s, i_s);
     
     % Combine center surround signals to obtain color opponency..
-    I = Ic - Is;
-    R = utils.on(Lc - (Ms + Ss)/2);
-    G = utils.on(Mc - (Ls + Ss)/2);
-    B = utils.on(Sc - (Ls + Ms)/2);
-    Y = utils.on((Lc + Mc)/2 - abs(Ls - Ms)/2 - Ss);
+    I = i_c - i_s;  % TODO lightness/darkness?
+    R = utils.on(r_c - (g_s + b_s)/2);
+    G = utils.on(g_c - (r_s + b_s)/2);
+    B = utils.on(b_c - (r_s + g_s)/2);
+    Y = utils.on((r_c + g_c)/2 - abs(r_s - g_s)/2 - b_s);
     
     figure()
-    subplot(3, 2, 1), imshow(img);
+    subplot(3, 2, 1), imshow(rgb);
     subplot(3, 2, 2), imagesc(I), colormap('gray'), title('intensity');
     subplot(3, 2, 3), imagesc(R), colormap('gray'), title('red');
     subplot(3, 2, 4), imagesc(G), colormap('gray'), title('green');
