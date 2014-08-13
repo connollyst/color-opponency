@@ -40,10 +40,10 @@ function [R_d, G_d, B_d, Y_d] = DODiagonal(rgb, config)
     Y_bl = utils.on((r_bl_c + g_bl_c)/2 - abs(r_tr_s - g_tr_s)/2 - b_tr_s);
     
     % Consolidate to get all diagonal color opponency..
-    R_d = R_tl + R_tr + R_br + R_bl;
-    G_d = G_tl + G_tr + G_br + G_bl;
-    B_d = B_tl + B_tr + B_br + B_bl;
-    Y_d = Y_tl + Y_tr + Y_br + Y_bl;
+    R_d = max(max(max(R_tl, R_tr), R_br), R_bl);
+    G_d = max(max(max(G_tl, G_tr), G_br), G_bl);
+    B_d = max(max(max(B_tl, B_tr), B_br), B_bl);
+    Y_d = max(max(max(Y_tl, Y_tr), Y_br), Y_bl);
     
     figure()
     subplot(3, 2, 1), imshow(rgb);
@@ -56,18 +56,18 @@ end
 
 function [tlc, trc, brc, blc] = centers(color, config)
 % Returns the top & bottom by left & right centers.
-    tlc = apply_top_left_center_filter      (color, config);
-    trc = apply_top_right_center_filter     (color, config);
-    blc = apply_bottom_left_center_filter   (color, config);
-    brc = apply_bottom_right_center_filter  (color, config);
+    tlc = utils.on(apply_top_left_center_filter      (color, config));
+    trc = utils.on(apply_top_right_center_filter     (color, config));
+    blc = utils.on(apply_bottom_left_center_filter   (color, config));
+    brc = utils.on(apply_bottom_right_center_filter  (color, config));
 end
 
 function [tls, trs, brs, bls] = surrounds(color, config)
 % Returns the top & bottom by left & right surrounds.
-    tls = apply_top_left_surround_filter    (color, config);
-    trs = apply_top_right_surround_filter   (color, config);
-    bls = apply_bottom_left_surround_filter (color, config);
-    brs = apply_bottom_right_surround_filter(color, config);
+    tls = utils.off(apply_top_left_surround_filter    (color, config));
+    trs = utils.off(apply_top_right_surround_filter   (color, config));
+    bls = utils.off(apply_bottom_left_surround_filter (color, config));
+    brs = utils.off(apply_bottom_right_surround_filter(color, config));
 end
 
 function I_out = apply_top_left_center_filter(I_in, config)

@@ -57,13 +57,13 @@ function [R_v, G_v, B_v, Y_v] = DOVertical(rgb, config)
 end
 
 function [t_center, b_center] = top_bottom_center(color, config)
-    t_center = apply_top_center_filter(color, config);
-    b_center = apply_bottom_center_filter(color, config);
+    t_center   = utils.on(apply_top_center_filter(color, config));
+    b_center   = utils.on(apply_bottom_center_filter(color, config));
 end
 
 function [t_surround, b_surround] = top_bottom_surround(color, config)
-    t_surround = apply_top_surround_filter(color, config);
-    b_surround = apply_bottom_surround_filter(color, config);
+    t_surround = utils.off(apply_top_surround_filter(color, config));
+    b_surround = utils.off(apply_bottom_surround_filter(color, config));
 end
 
 function I_out = apply_top_center_filter(I_in, config)
