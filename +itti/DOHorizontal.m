@@ -91,7 +91,16 @@ function rgb_out = apply_right_inhibitory_filter(rgb_in, config)
 end
 
 function filtered = apply(img, filter)
-    filtered = imfilter(img, filter, 'same');
+    % Add padding
+    pad_cols = ceil(size(img,1)/2);
+    pad_rows = ceil(size(img,2)/2);
+    padded   = padarray(img, [pad_cols, pad_rows], 'symmetric','both');
+    % Apply filter
+    padded_filtered = imfilter(padded, filter, 'same');
+    % Remove padding
+    cols = pad_cols+1:pad_cols+size(img,1);
+    rows = pad_rows+1:pad_rows+size(img,2);
+    filtered = padded_filtered(cols,rows);
 end
 
 function n = itti_normalize(channel, I)
