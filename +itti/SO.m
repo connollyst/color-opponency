@@ -24,19 +24,21 @@ function [R, G, B, Y] = SO(rgb, config)
     b_s = normalize(b_s, i_s);
     
     % Combine center surround signals to obtain color opponency..
-    I = i_c - i_s;  % TODO lightness/darkness?
+    L = utils.on(i_c - i_s);
+    D = utils.off(i_c - i_s);
     R = utils.on(r_c - (g_s + b_s)/2);
     G = utils.on(g_c - (r_s + b_s)/2);
     B = utils.on(b_c - (r_s + g_s)/2);
     Y = utils.on((r_c + g_c)/2 - abs(r_s - g_s)/2 - b_s);
     
     figure()
-    subplot(3, 2, 1), imshow(rgb);
-    subplot(3, 2, 2), imagesc(I), colormap('gray'), title('intensity');
-    subplot(3, 2, 3), imagesc(R), colormap('gray'), title('red');
-    subplot(3, 2, 4), imagesc(G), colormap('gray'), title('green');
-    subplot(3, 2, 5), imagesc(B), colormap('gray'), title('blue');
-    subplot(3, 2, 6), imagesc(Y), colormap('gray'), title('yellow');
+    subplot(4, 2, 1), imshow(rgb);
+    subplot(4, 2, 3), imshow(L), colormap('gray'), title('light');
+    subplot(4, 2, 4), imshow(D), colormap('gray'), title('dark');
+    subplot(4, 2, 5), imshow(R), colormap('gray'), title('red');
+    subplot(4, 2, 6), imshow(G), colormap('gray'), title('green');
+    subplot(4, 2, 7), imshow(B), colormap('gray'), title('blue');
+    subplot(4, 2, 8), imshow(Y), colormap('gray'), title('yellow');
 end
 
 function Ic = center(I, config)
