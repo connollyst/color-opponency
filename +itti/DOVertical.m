@@ -42,10 +42,11 @@ function [R_v, G_v, B_v, Y_v] = DOVertical(rgb, config)
     Y_b = utils.on((r_b_c + g_b_c)/2 - abs(r_t_s - g_t_s)/2 - b_t_s);
     
     % Consolidate to get all horizontal color opponency..
-    R_v = R_t + R_b;
-    G_v = G_t + G_b;
-    B_v = B_t + B_b;
-    Y_v = Y_t + Y_b;
+    % TODO average? sum?
+    R_v = max(R_t, R_b);
+    G_v = max(G_t, G_b);
+    B_v = max(B_t, B_b);
+    Y_v = max(Y_t, Y_b);
     
     figure()
     subplot(3, 2, 1), imshow(rgb);

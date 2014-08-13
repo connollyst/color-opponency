@@ -40,6 +40,7 @@ function [R_d, G_d, B_d, Y_d] = DODiagonal(rgb, config)
     Y_bl = utils.on((r_bl_c + g_bl_c)/2 - abs(r_tr_s - g_tr_s)/2 - b_tr_s);
     
     % Consolidate to get all diagonal color opponency..
+    % TODO average? sum?
     R_d = max(max(max(R_tl, R_tr), R_br), R_bl);
     G_d = max(max(max(G_tl, G_tr), G_br), G_bl);
     B_d = max(max(max(B_tl, B_tr), B_br), B_bl);

@@ -42,10 +42,11 @@ function [R_h, G_h, B_h, Y_h] = DOHorizontal(rgb, config)
     Y_r = utils.on((r_r_c + g_r_c)/2 - abs(r_l_s - g_l_s)/2 - b_l_s);
     
     % Recover all horizontal color opponency..
-    R_h = R_l + R_r;
-    G_h = G_l + G_r;
-    B_h = B_l + B_r;
-    Y_h = Y_l + Y_r;
+    % TODO average? sum?
+    R_h = max(R_l, R_r);
+    G_h = max(G_l, G_r);
+    B_h = max(B_l, B_r);
+    Y_h = max(Y_l, Y_r);
     
     figure()
     subplot(3, 2, 1), imshow(rgb);
