@@ -1,4 +1,15 @@
-function [R_v, G_v, B_v, Y_v] = DOVertical(rgb, config)
+function [RGBY_v] = DOVertical(rgb, config)
+%DOVERTICAL Double Opponent (Vertical)
+%   Decomposes the RGB image into it's RGBY vertical opponent components.
+%
+%   Input
+%       rgb:    the original rgb image
+%       config: the model configuration
+%   Output
+%       RGBY_h: the vertical opponent color components in the format
+%               RGBY_h(column, row, color, scale)
+
+    RGBY_v = zeros(size(rgb,1), size(rgb,2), 4, config.wave.n_scales);
     
     rgb = im2double(rgb);
     
@@ -33,12 +44,16 @@ function [R_v, G_v, B_v, Y_v] = DOVertical(rgb, config)
         B_v = max(B_t, B_b);
         Y_v = max(Y_t, Y_b);
 
+        RGBY_v(:,:,1,scale) = R_v;
+        RGBY_v(:,:,2,scale) = G_v;
+        RGBY_v(:,:,3,scale) = B_v;
+        RGBY_v(:,:,4,scale) = Y_v;
+        
         figure(1)
         subplot(2, 2, 1), imshow(R_v), title('red');
         subplot(2, 2, 2), imshow(G_v), title('green');
         subplot(2, 2, 3), imshow(B_v), title('blue');
         subplot(2, 2, 4), imshow(Y_v), title('yellow');
-        waitforbuttonpress;
     end
 end
 

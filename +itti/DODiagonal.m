@@ -1,4 +1,15 @@
-function [R_d, G_d, B_d, Y_d] = DODiagonal(rgb, config)
+function RGBY_d = DODiagonal(rgb, config)
+%DODIAGONAL Double Opponent (Diagonal)
+%   Decomposes the RGB image into it's RGBY diagonal opponent components.
+%
+%   Input
+%       rgb:    the original rgb image
+%       config: the model configuration
+%   Output
+%       RGBY_h: the diagonal opponent color components in the format
+%               RGBY_h(column, row, color, scale)
+
+    RGBY_d = zeros(size(rgb,1), size(rgb,2), 4, config.wave.n_scales);
 
     rgb = im2double(rgb);
     
@@ -44,6 +55,11 @@ function [R_d, G_d, B_d, Y_d] = DODiagonal(rgb, config)
         B_d = max(max(max(B_tl, B_tr), B_br), B_bl);
         Y_d = max(max(max(Y_tl, Y_tr), Y_br), Y_bl);
 
+        RGBY_d(:,:,1,scale) = R_d;
+        RGBY_d(:,:,2,scale) = G_d;
+        RGBY_d(:,:,3,scale) = B_d;
+        RGBY_d(:,:,4,scale) = Y_d;
+        
         figure(1)
         subplot(2, 2, 1), imshow(R_d), title('red');
         subplot(2, 2, 2), imshow(G_d), title('green');

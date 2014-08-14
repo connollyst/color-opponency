@@ -1,4 +1,15 @@
-function [R_h, G_h, B_h, Y_h] = DOHorizontal(rgb, config)
+function RGBY_h = DOHorizontal(rgb, config)
+%DOHORIZONTAL Double Opponent (Horizontal)
+%   Decomposes the RGB image into it's RGBY horizontal opponent components.
+%
+%   Input
+%       rgb:    the original rgb image
+%       config: the model configuration
+%   Output
+%       RGBY_h: the horizontal opponent color components in the format
+%               RGBY_h(column, row, color, scale)
+
+    RGBY_h = zeros(size(rgb,1), size(rgb,2), 4, config.wave.n_scales);
     
     rgb = im2double(rgb);
     
@@ -33,12 +44,16 @@ function [R_h, G_h, B_h, Y_h] = DOHorizontal(rgb, config)
         B_h = max(B_l, B_r);
         Y_h = max(Y_l, Y_r);
 
+        RGBY_h(:,:,1,scale) = R_h;
+        RGBY_h(:,:,2,scale) = G_h;
+        RGBY_h(:,:,3,scale) = B_h;
+        RGBY_h(:,:,4,scale) = Y_h;
+        
         figure(1)
         subplot(2, 2, 1), imshow(R_h), title('red');
         subplot(2, 2, 2), imshow(G_h), title('green');
         subplot(2, 2, 3), imshow(B_h), title('blue');
         subplot(2, 2, 4), imshow(Y_h), title('yellow');
-        waitforbuttonpress;
     end
 end
 
