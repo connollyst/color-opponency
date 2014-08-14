@@ -8,4 +8,5 @@ function config = config_1
     config.inhibition.length = 5;
     config.inhibition.width  = 3;
     config.inhibition.offset = 5;
+    config.wave.n_scales     = 8;
 end
