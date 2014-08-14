@@ -5,17 +5,14 @@ function [R_v, G_v, B_v, Y_v] = DOVertical(rgb, config)
     r = rgb(:,:,1);
     g = rgb(:,:,2);
     b = rgb(:,:,3);
-    i = (r + g + b)/3;
     
     [r_t_c, r_b_c] = top_bottom_center(r, config);
     [g_t_c, g_b_c] = top_bottom_center(g, config);
     [b_t_c, b_b_c] = top_bottom_center(b, config);
-    [i_t_c, i_b_c] = top_bottom_center(i, config);
     
     [r_t_s, r_b_s] = top_bottom_surround(r, config);
     [g_t_s, g_b_s] = top_bottom_surround(g, config);
     [b_t_s, b_b_s] = top_bottom_surround(b, config);
-    [i_t_s, i_b_s] = top_bottom_surround(i, config);
     
     % Combine center surround signals to obtain color opponency..
     %I = i_c - i_s;  % TODO lightness/darkness?
@@ -38,7 +35,6 @@ function [R_v, G_v, B_v, Y_v] = DOVertical(rgb, config)
     
     figure()
     subplot(3, 2, 1), imshow(rgb);
-    %subplot(3, 2, 2), imagesc(I_v), colormap('gray'), title('intensity');
     subplot(3, 2, 3), imshow(R_v), colormap('gray'), title('red');
     subplot(3, 2, 4), imshow(G_v), colormap('gray'), title('green');
     subplot(3, 2, 5), imshow(B_v), colormap('gray'), title('blue');

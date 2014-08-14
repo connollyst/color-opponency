@@ -5,17 +5,14 @@ function [R_h, G_h, B_h, Y_h] = DOHorizontal(rgb, config)
     r = rgb(:,:,1);
     g = rgb(:,:,2);
     b = rgb(:,:,3);
-    i = (r + g + b)/3;
     
     [r_l_c, r_r_c] = left_right_center(r, config);
     [g_l_c, g_r_c] = left_right_center(g, config);
     [b_l_c, b_r_c] = left_right_center(b, config);
-    [i_l_c, i_r_c] = left_right_center(i, config);
     
     [r_l_s, r_r_s] = left_right_surround(r, config);
     [g_l_s, g_r_s] = left_right_surround(g, config);
     [b_l_s, b_r_s] = left_right_surround(b, config);
-    [i_l_s, i_r_s] = left_right_surround(i, config);
     
     % Combine center surround signals to obtain color opponency..
     %I = i_c - i_s;  % TODO lightness/darkness?
@@ -38,7 +35,6 @@ function [R_h, G_h, B_h, Y_h] = DOHorizontal(rgb, config)
     
     figure()
     subplot(3, 2, 1), imshow(rgb);
-    %subplot(3, 2, 2), imagesc(I_h), colormap('gray'), title('intensity');
     subplot(3, 2, 3), imshow(R_h), colormap('gray'), title('red');
     subplot(3, 2, 4), imshow(G_h), colormap('gray'), title('green');
     subplot(3, 2, 5), imshow(B_h), colormap('gray'), title('blue');

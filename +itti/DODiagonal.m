@@ -5,17 +5,14 @@ function [R_d, G_d, B_d, Y_d] = DODiagonal(rgb, config)
     r = rgb(:,:,1);
     g = rgb(:,:,2);
     b = rgb(:,:,3);
-    i = (r + g + b)/3;
     
     [r_tl_c, r_tr_c, r_br_c, r_bl_c] = centers(r, config);
     [g_tl_c, g_tr_c, g_br_c, g_bl_c] = centers(g, config);
     [b_tl_c, b_tr_c, b_br_c, b_bl_c] = centers(b, config);
-    [i_tl_c, i_tr_c, i_br_c, i_bl_c] = centers(i, config);
     
     [r_tl_s, r_tr_s, r_br_s, r_bl_s] = surrounds(r, config);
     [g_tl_s, g_tr_s, g_br_s, g_bl_s] = surrounds(g, config);
     [b_tl_s, b_tr_s, b_br_s, b_bl_s] = surrounds(b, config);
-    [i_tl_s, i_tr_s, i_br_s, i_bl_s] = surrounds(i, config);
     
     % Combine center surround signals to obtain color opponency..
     % TOP LEFT
@@ -48,7 +45,6 @@ function [R_d, G_d, B_d, Y_d] = DODiagonal(rgb, config)
     
     figure()
     subplot(3, 2, 1), imshow(rgb);
-    %subplot(3, 2, 2), imagesc(I_d), colormap('gray'), title('intensity');
     subplot(3, 2, 3), imshow(R_d), colormap('gray'), title('red');
     subplot(3, 2, 4), imshow(G_d), colormap('gray'), title('green');
     subplot(3, 2, 5), imshow(B_d), colormap('gray'), title('blue');

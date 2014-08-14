@@ -5,21 +5,16 @@ function [R, G, B, Y] = SO(rgb, config)
     r = rgb(:,:,1);
     g = rgb(:,:,2);
     b = rgb(:,:,3);
-    i = (r + g + b)/3;
     
     r_c = center(r, config);
     g_c = center(g, config);
     b_c = center(b, config);
-    i_c = center(i, config);
     
     r_s = surround(r, config);
     g_s = surround(g, config);
     b_s = surround(b, config);
-    i_s = surround(i, config);
     
     % Combine center surround signals to obtain color opponency..
-    L = utils.on(i_c - i_s);
-    D = utils.off(i_c - i_s);
     R = utils.on(r_c - (g_s + b_s)/2);
     G = utils.on(g_c - (r_s + b_s)/2);
     B = utils.on(b_c - (r_s + g_s)/2);
@@ -27,8 +22,6 @@ function [R, G, B, Y] = SO(rgb, config)
     
     figure()
     subplot(4, 2, 1), imshow(rgb);
-    subplot(4, 2, 3), imshow(L), colormap('gray'), title('light');
-    subplot(4, 2, 4), imshow(D), colormap('gray'), title('dark');
     subplot(4, 2, 5), imshow(R), colormap('gray'), title('red');
     subplot(4, 2, 6), imshow(G), colormap('gray'), title('green');
     subplot(4, 2, 7), imshow(B), colormap('gray'), title('blue');
