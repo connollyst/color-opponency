@@ -11,17 +11,11 @@ function [R, G, B, Y] = SO(rgb, config)
     g_c = center(g, config);
     b_c = center(b, config);
     i_c = center(i, config);
-    %r_c = normalize(r_c, i_c);
-    %g_c = normalize(g_c, i_c);
-    %b_c = normalize(b_c, i_c);
     
     r_s = surround(r, config);
     g_s = surround(g, config);
     b_s = surround(b, config);
     i_s = surround(i, config);
-    %r_s = normalize(r_s, i_s);
-    %g_s = normalize(g_s, i_s);
-    %b_s = normalize(b_s, i_s);
     
     % Combine center surround signals to obtain color opponency..
     L = utils.on(i_c - i_s);
@@ -60,10 +54,4 @@ function filtered = gaussian(img, filter)
     cols = pad_cols+1:pad_cols+size(img,1);
     rows = pad_rows+1:pad_rows+size(img,2);
     filtered = padded_filtered(cols,rows);
-end
-
-function n = normalize(channel, I)
-% Normalize channel (r, g, or b) by I.
-%   Note, unlike in Itti 1998, we normalize values at low luminance also.
-    n = channel./I;
 end

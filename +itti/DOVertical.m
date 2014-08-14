@@ -11,23 +11,11 @@ function [R_v, G_v, B_v, Y_v] = DOVertical(rgb, config)
     [g_t_c, g_b_c] = top_bottom_center(g, config);
     [b_t_c, b_b_c] = top_bottom_center(b, config);
     [i_t_c, i_b_c] = top_bottom_center(i, config);
-    %r_t_c = itti_normalize(r_t_c, i_t_c);
-    %g_t_c = itti_normalize(g_t_c, i_t_c);
-    %b_t_c = itti_normalize(b_t_c, i_t_c);
-    %r_b_c = itti_normalize(r_b_c, i_b_c);
-    %g_b_c = itti_normalize(g_b_c, i_b_c);
-    %b_b_c = itti_normalize(b_b_c, i_b_c);
     
     [r_t_s, r_b_s] = top_bottom_surround(r, config);
     [g_t_s, g_b_s] = top_bottom_surround(g, config);
     [b_t_s, b_b_s] = top_bottom_surround(b, config);
     [i_t_s, i_b_s] = top_bottom_surround(i, config);
-    %r_t_s = itti_normalize(r_t_s, i_t_s);
-    %g_t_s = itti_normalize(g_t_s, i_t_s);
-    %b_t_s = itti_normalize(b_t_s, i_t_s);
-    %r_b_s = itti_normalize(r_b_s, i_b_s);
-    %g_b_s = itti_normalize(g_b_s, i_b_s);
-    %b_b_s = itti_normalize(b_b_s, i_b_s);
     
     % Combine center surround signals to obtain color opponency..
     %I = i_c - i_s;  % TODO lightness/darkness?

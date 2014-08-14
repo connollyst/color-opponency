@@ -11,23 +11,11 @@ function [R_h, G_h, B_h, Y_h] = DOHorizontal(rgb, config)
     [g_l_c, g_r_c] = left_right_center(g, config);
     [b_l_c, b_r_c] = left_right_center(b, config);
     [i_l_c, i_r_c] = left_right_center(i, config);
-    %r_l_c = itti_normalize(r_l_c, i_l_c);
-    %g_l_c = itti_normalize(g_l_c, i_l_c);
-    %b_l_c = itti_normalize(b_l_c, i_l_c);
-    %r_r_c = itti_normalize(r_r_c, i_r_c);
-    %g_r_c = itti_normalize(g_r_c, i_r_c);
-    %b_r_c = itti_normalize(b_r_c, i_r_c);
     
     [r_l_s, r_r_s] = left_right_surround(r, config);
     [g_l_s, g_r_s] = left_right_surround(g, config);
     [b_l_s, b_r_s] = left_right_surround(b, config);
     [i_l_s, i_r_s] = left_right_surround(i, config);
-    %r_l_s = itti_normalize(r_l_s, i_l_s);
-    %g_l_s = itti_normalize(g_l_s, i_l_s);
-    %b_l_s = itti_normalize(b_l_s, i_l_s);
-    %r_r_s = itti_normalize(r_r_s, i_r_s);
-    %g_r_s = itti_normalize(g_r_s, i_r_s);
-    %b_r_s = itti_normalize(b_r_s, i_r_s);
     
     % Combine center surround signals to obtain color opponency..
     %I = i_c - i_s;  % TODO lightness/darkness?
@@ -102,10 +90,4 @@ function filtered = apply(img, filter)
     cols = pad_cols+1:pad_cols+size(img,1);
     rows = pad_rows+1:pad_rows+size(img,2);
     filtered = padded_filtered(cols,rows);
-end
-
-function n = itti_normalize(channel, I)
-% Normalize channel (r, g, or b) by I.
-%   Note, unlike in Itti 1998, we itti_normalize values at low luminance also.
-    n = channel./I;
 end
