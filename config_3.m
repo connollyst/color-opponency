@@ -12,5 +12,5 @@ function config = config_3
     config.inhibition.length = 1;
     config.inhibition.width  = 0.5;
     config.inhibition.offset = 5;
-    config.wave.n_scales     = 8;
+    config.wave.n_scales     = 2;
 end
